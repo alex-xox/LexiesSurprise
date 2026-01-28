@@ -113,6 +113,7 @@
       padding:18px;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 133, 168, .35);
+      touch-action: pan-y; /* allow vertical scroll inside pages */
     }
 
     .book-inner{
@@ -129,7 +130,7 @@
     .nav-zone{
       position:absolute; top:0; bottom:0;
       width:18%;
-      z-index:50;
+      z-index:80;
       cursor:pointer;
       user-select:none;
       -webkit-tap-highlight-color: transparent;
@@ -165,6 +166,7 @@
       box-shadow: var(--shadow2);
       border: 1px solid rgba(240, 170, 200, .35);
       overflow:hidden;
+      transition: transform 850ms cubic-bezier(.2,.9,.2,1);
     }
 
     /* Paper edge + spine vibe */
@@ -177,19 +179,14 @@
         linear-gradient(90deg, rgba(240,215,228,.9), rgba(240,215,228,.2));
       box-shadow: inset -1px 0 0 rgba(240,170,200,.25);
       opacity:.95;
+      pointer-events:none;
     }
 
-    /* When flipped */
     .page.flipped{
       transform: rotateY(-180deg);
     }
 
-    /* Smooth flipping */
-    .page{
-      transition: transform 850ms cubic-bezier(.2,.9,.2,1);
-    }
-
-    /* Page content */
+    /* Page content wrapper now scrolls on mobile */
     .content{
       position:absolute;
       inset:0;
@@ -197,6 +194,14 @@
       display:flex;
       flex-direction:column;
       gap:16px;
+      overflow:hidden;
+    }
+
+    .scrollable{
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 10px;
+      flex:1;
     }
 
     .topline{
@@ -230,9 +235,7 @@
         0 2px 0 rgba(255,255,255,.8),
         0 18px 40px rgba(255,77,141,.18);
     }
-    .engraved{
-      position:relative;
-    }
+    .engraved{ position:relative; }
     .engraved::after{
       content:"";
       position:absolute;
@@ -301,6 +304,32 @@
       font-weight:600;
     }
 
+    /* "Hard to see" secret messages */
+    .secret-footer{
+      margin-top: 16px;
+      padding: 12px 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.30);
+      border: 1px solid rgba(240,170,200,.18);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.25);
+    }
+    .secret-title{
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(90, 20, 55, .35);
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+    .secret-lines{
+      display:grid;
+      gap:8px;
+      font-family: "Playfair Display", serif;
+      font-size: 13px;
+      color: rgba(90, 20, 55, .26); /* hard to see */
+      line-height: 1.2;
+    }
+
     /* Interactive Page 1: Scratch-to-reveal */
     .scratch-wrap{
       display:grid;
@@ -317,7 +346,7 @@
       padding:14px;
       position:relative;
       overflow:hidden;
-      min-height: 260px;
+      min-height: 300px;
     }
     .scratch-card h3{
       font-family:"Playfair Display", serif;
@@ -333,18 +362,24 @@
     }
     #scratchCanvas{
       width:100%;
-      height: 170px;
+      height: 190px;
       border-radius: 14px;
       display:block;
-      background: linear-gradient(135deg, rgba(255,77,141,.12), rgba(255,133,168,.08));
+      background: transparent;
       border: 1px dashed rgba(255,77,141,.35);
+      touch-action: none; /* allow drawing on iOS */
     }
-    .hidden-message{
+
+    /* message UNDER the canvas so it cannot show early */
+    .scratch-under{
       position:absolute;
       left:14px; right:14px;
-      bottom:14px;
-      padding:14px 14px;
+      top: 92px; /* below heading and paragraph */
+      height: 190px;
       border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       background: linear-gradient(135deg, rgba(255,77,141,.10), rgba(255,133,168,.08));
       border: 1px solid rgba(255,77,141,.18);
       box-shadow: 0 10px 18px rgba(0,0,0,.04);
@@ -353,7 +388,10 @@
       font-size: 34px;
       color: rgba(90, 20, 55, .92);
       user-select:none;
+      pointer-events:none;
+      z-index:1;
     }
+    #scratchCanvas{ position:relative; z-index:2; }
 
     .mini-panel{
       border-radius: 18px;
@@ -361,7 +399,7 @@
       border: 1px solid rgba(240,170,200,.25);
       box-shadow: 0 12px 22px rgba(0,0,0,.05);
       padding:14px;
-      min-height: 260px;
+      min-height: 300px;
       display:flex;
       flex-direction:column;
       gap:10px;
@@ -400,7 +438,7 @@
       color: rgba(50, 20, 35, .85);
       font-size:13px;
       line-height:1.35;
-      min-height: 74px;
+      min-height: 92px; /* ensure visible */
       display:flex;
       align-items:center;
     }
@@ -408,7 +446,6 @@
     /* Interactive Page 2: Heart constellation */
     .constellation{
       position:relative;
-      flex:1;
       border-radius: 18px;
       background:
         radial-gradient(800px 300px at 20% 20%, rgba(255,255,255,.9), rgba(255,255,255,.45)),
@@ -416,7 +453,7 @@
       border: 1px solid rgba(255,77,141,.18);
       box-shadow: 0 16px 30px rgba(0,0,0,.06);
       overflow:hidden;
-      min-height: 320px;
+      min-height: 360px;
     }
     .spark{
       position:absolute;
@@ -427,6 +464,7 @@
       cursor:pointer;
       box-shadow: 0 12px 20px rgba(255,77,141,.22);
       transition: transform .12s ease;
+      z-index:2;
     }
     .spark::before,.spark::after{
       content:"";
@@ -437,9 +475,11 @@
     .spark::before{ left:-7px; top:0;}
     .spark::after{ top:-7px; left:0;}
     .spark:hover{ transform: rotate(45deg) scale(1.06); }
+
+    /* Tooltip pinned to bottom so it never covers hearts */
     .tooltip{
       position:absolute;
-      left:16px; bottom:16px; right:16px;
+      left:16px; right:16px; bottom:16px;
       padding:12px 14px;
       border-radius: 14px;
       background: rgba(255,255,255,.85);
@@ -450,6 +490,7 @@
       display:flex;
       gap:10px;
       align-items:flex-start;
+      z-index:3;
     }
     .tooltip strong{font-weight:900}
     .tooltip .pill{
@@ -486,14 +527,14 @@
       background: linear-gradient(135deg, rgba(255,77,141,.98), rgba(255,133,168,.82));
       box-shadow: 0 22px 46px rgba(255,77,141,.28);
       transition: transform .12s ease, filter .12s ease;
+      position:relative;
+      z-index:2;
     }
     .big-yes:hover{ filter: brightness(1.02); }
     .big-yes:active{ transform: scale(.99); }
 
     .small-no{
       position:absolute;
-      left:50%;
-      transform: translateX(-50%);
       width:120px;
       height:38px;
       border-radius: 999px;
@@ -504,6 +545,10 @@
       cursor:pointer;
       box-shadow: 0 12px 24px rgba(0,0,0,.08);
       transition: transform .12s ease, background .12s ease;
+      z-index:1; /* always below YES */
+      left:50%;
+      top: 67%;
+      transform: translateX(-50%);
     }
     .small-no:hover{ background: rgba(255,255,255,.9); }
     .small-no:active{ transform: translateX(-50%) scale(.98); }
@@ -523,11 +568,13 @@
 
     /* Mobile tweaks */
     @media (max-width: 820px){
-      .content{ padding: 34px 22px 24px 44px; }
+      .content{ padding: 34px 18px 18px 44px; }
       .reasons{ grid-template-columns: 1fr; }
       .scratch-wrap{ grid-template-columns: 1fr; }
       .hint{ top:-46px; font-size:12px; }
-      .nav-zone{ width:22%; }
+      .nav-zone{ width:14%; } /* keep swiping primary */
+      .scratch-under{ top: 92px; height:190px; }
+      .constellation{ min-height: 420px; }
     }
   </style>
 </head>
@@ -538,10 +585,10 @@
   <div class="wrap">
     <div class="stage">
       <div class="hint">
-        Click the <kbd>right edge</kbd> to turn the page • click the <kbd>left edge</kbd> to go back
+        Swipe <kbd>→</kbd> / <kbd>←</kbd> on mobile • click edges on desktop • arrows work too
       </div>
 
-      <div class="book">
+      <div class="book" id="book">
         <div class="book-inner">
           <div class="nav-zone nav-left" id="navLeft" title="Previous page"></div>
           <div class="nav-zone nav-right" id="navRight" title="Next page"></div>
@@ -565,19 +612,19 @@
 
                 <p class="note">
                   A tiny interactive card—made just for you. 💗<br>
-                  (Turn the page from the right side like a real little book.)
+                  (Turn the page like a little book.)
                 </p>
 
                 <div style="margin-top:auto; display:flex; gap:12px; align-items:center; justify-content:space-between;">
                   <div class="note" style="margin:0; opacity:.85">
-                    Tip: keyboard works too → <strong>→</strong> / <strong>←</strong>
+                    Tip: swipe left/right on mobile
                   </div>
                   <div class="badge" style="background:rgba(255,255,255,.65)">♥</div>
                 </div>
               </div>
             </section>
 
-            <!-- PAGE 2: 15 reasons -->
+            <!-- PAGE 2: 15 reasons (scrollable + secrets) -->
             <section class="page" data-index="1" style="z-index:5">
               <div class="content">
                 <div class="topline">
@@ -588,19 +635,32 @@
                 <h2 style="font-family:'Playfair Display',serif; font-size:28px; color:rgba(70,25,50,.92)">
                   15 Reasons I Like You
                 </h2>
-                <p class="note" style="margin-top:-6px">
-                  Just a few… but you know I could keep going.
-                </p>
 
-                <div class="reasons" id="reasonsGrid"></div>
+                <div class="scrollable">
+                  <p class="note" style="margin-top:0">
+                    Just a few… but you know I could keep going.
+                  </p>
 
-                <p class="note" style="margin-top:auto; opacity:.9">
-                  (P.S. They’re in a cute random order every time.)
-                </p>
+                  <div class="reasons" id="reasonsGrid"></div>
+
+                  <div class="secret-footer">
+                    <div class="secret-title">little secrets</div>
+                    <div class="secret-lines">
+                      <div>• (secret message one)</div>
+                      <div>• (secret message two)</div>
+                      <div>• (secret message three)</div>
+                      <div>• (secret message four)</div>
+                    </div>
+                  </div>
+
+                  <p class="note" style="margin-top:12px; opacity:.9">
+                    (P.S. They’re in a cute random order every time.)
+                  </p>
+                </div>
               </div>
             </section>
 
-            <!-- PAGE 3: Scratch to reveal + compliment jar -->
+            <!-- PAGE 3: Scratch to reveal + compliment jar (scrollable on mobile) -->
             <section class="page" data-index="2" style="z-index:4">
               <div class="content">
                 <div class="topline">
@@ -611,28 +671,34 @@
                 <h2 style="font-family:'Playfair Display',serif; font-size:28px; color:rgba(70,25,50,.92)">
                   Little Surprises
                 </h2>
-                <p class="note" style="margin-top:-6px">
-                  Scratch the panel to reveal a message, then tap a chip to pull a note from the jar.
-                </p>
 
-                <div class="scratch-wrap">
-                  <div class="scratch-card">
-                    <h3>Scratch to Reveal</h3>
-                    <p>Use your finger or mouse. Scratch enough and the message shows through.</p>
-                    <canvas id="scratchCanvas" width="900" height="360"></canvas>
-                    <div class="hidden-message" aria-hidden="true">You make my days softer.</div>
+                <div class="scrollable">
+                  <p class="note" style="margin-top:0">
+                    Scratch the panel to reveal a message, then tap a chip to pull a note from the jar.
+                  </p>
+
+                  <div class="scratch-wrap">
+                    <div class="scratch-card">
+                      <h3>Scratch to Reveal</h3>
+                      <p>Use your finger or mouse. Scratch enough and it shows through.</p>
+
+                      <div class="scratch-under" aria-hidden="true">You make my days softer.</div>
+                      <canvas id="scratchCanvas" width="900" height="360"></canvas>
+                    </div>
+
+                    <div class="mini-panel">
+                      <h3>Compliment Jar</h3>
+                      <div class="chips" id="chips"></div>
+                      <div class="jar-note" id="jarNote">Pick one 💌</div>
+                    </div>
                   </div>
 
-                  <div class="mini-panel">
-                    <h3>Compliment Jar</h3>
-                    <div class="chips" id="chips"></div>
-                    <div class="jar-note" id="jarNote">Pick one 💌</div>
-                  </div>
+                  <div style="height:10px"></div>
                 </div>
               </div>
             </section>
 
-            <!-- PAGE 4: Heart constellation -->
+            <!-- PAGE 4: Heart constellation (tooltip fixed bottom) -->
             <section class="page" data-index="3" style="z-index:3">
               <div class="content">
                 <div class="topline">
@@ -643,24 +709,27 @@
                 <h2 style="font-family:'Playfair Display',serif; font-size:28px; color:rgba(70,25,50,.92)">
                   A Little Constellation
                 </h2>
-                <p class="note" style="margin-top:-6px">
-                  Tap the hearts to reveal tiny “moments” (you can edit these to match your story).
-                </p>
 
-                <div class="constellation" id="constellation">
-                  <div class="tooltip" id="tooltip">
-                    <strong>Tap a heart</strong> to reveal a note.
-                    <span class="pill" id="foundPill">0 / 6 found</span>
+                <div class="scrollable">
+                  <p class="note" style="margin-top:0">
+                    Tap the hearts to reveal tiny “moments” (you can edit these to match your story).
+                  </p>
+
+                  <div class="constellation" id="constellation">
+                    <div class="tooltip" id="tooltip">
+                      <strong>Tap a heart</strong> to reveal a note.
+                      <span class="pill" id="foundPill">0 / 6 found</span>
+                    </div>
                   </div>
-                </div>
 
-                <p class="note" style="margin-top:auto; opacity:.9">
-                  (If you want, replace these with inside jokes, dates, places, or memories.)
-                </p>
+                  <p class="note" style="margin-top:12px; opacity:.9">
+                    (Replace these with inside jokes, dates, places, or memories.)
+                  </p>
+                </div>
               </div>
             </section>
 
-            <!-- PAGE 5: Valentine question -->
+            <!-- PAGE 5: Valentine question (NO can never overlap YES) -->
             <section class="page" data-index="4" style="z-index:2">
               <div class="content" style="position:relative">
                 <div class="topline">
@@ -671,9 +740,6 @@
                 <h2 style="font-family:'Playfair Display',serif; font-size:30px; color:rgba(70,25,50,.92); text-align:center">
                   Will you be my valentine?
                 </h2>
-                <p class="note" style="text-align:center; margin-top:-6px">
-                  I’m asking nicely. With a very big button. 🙂
-                </p>
 
                 <div class="cta" id="ctaArea">
                   <button class="big-yes" id="yesBtn">YES 💖</button>
@@ -683,7 +749,7 @@
                   </div>
                 </div>
 
-                <button class="small-no" id="noBtn" style="top: 67%;">no</button>
+                <button class="small-no" id="noBtn">no</button>
               </div>
             </section>
 
@@ -719,10 +785,10 @@
     })();
 
     /* ---------------------------
-       Page flip logic
+       Page flip logic + swipe on mobile
     ---------------------------- */
     const pages = Array.from(document.querySelectorAll('.page'));
-    let current = 0; // visible top page index
+    let current = 0;
 
     function updatePageCounters(){
       const total = pages.length;
@@ -734,18 +800,12 @@
       idx = Math.max(0, Math.min(pages.length-1, idx));
       current = idx;
 
-      // flip pages before current
       pages.forEach((p,i)=>{
         if(i < current) p.classList.add('flipped');
         else p.classList.remove('flipped');
       });
 
-      // stack z-index so unflipped pages are on top
-      pages.forEach((p,i)=>{
-        const z = (pages.length - i);
-        p.style.zIndex = z;
-      });
-
+      pages.forEach((p,i)=> p.style.zIndex = (pages.length - i));
       updatePageCounters();
     }
 
@@ -759,6 +819,46 @@
       if(e.key === 'ArrowRight') next();
       if(e.key === 'ArrowLeft') prev();
     });
+
+    // Swipe (mobile only-ish): detect horizontal swipe on the book
+    const book = document.getElementById('book');
+    let touchStartX = 0, touchStartY = 0, tracking = false;
+
+    book.addEventListener('touchstart', (e)=>{
+      if(!e.touches || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+      tracking = true;
+    }, {passive:true});
+
+    book.addEventListener('touchmove', (e)=>{
+      if(!tracking || !e.touches || e.touches.length !== 1) return;
+      const t = e.touches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+
+      // If it's clearly horizontal, prevent scrolling from stealing it
+      if(Math.abs(dx) > 18 && Math.abs(dx) > Math.abs(dy) + 10){
+        e.preventDefault();
+      }
+    }, {passive:false});
+
+    book.addEventListener('touchend', (e)=>{
+      if(!tracking) return;
+      tracking = false;
+
+      const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+      if(!t) return;
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+
+      // Ignore if mostly vertical
+      if(Math.abs(dy) > Math.abs(dx)) return;
+
+      if(dx < -60) next();      // swipe left -> next page
+      else if(dx > 60) prev();  // swipe right -> prev page
+    }, {passive:true});
 
     goTo(0);
 
@@ -793,6 +893,7 @@
     }
 
     const reasonsGrid = document.getElementById('reasonsGrid');
+    reasonsGrid.innerHTML = "";
     shuffle(reasons).forEach((text, idx)=>{
       const item = document.createElement('div');
       item.className = 'reason';
@@ -801,30 +902,35 @@
     });
 
     /* ---------------------------
-       Page 3: Scratch to reveal
+       Page 3: Scratch to reveal (mobile fixed)
     ---------------------------- */
     const canvas = document.getElementById('scratchCanvas');
     const ctx = canvas.getContext('2d');
     let isDrawing = false;
+    let revealed = false;
 
     function fitScratchCanvas(){
-      // keep internal resolution crisp
       const rect = canvas.getBoundingClientRect();
       const dpr = Math.max(1, window.devicePixelRatio || 1);
       canvas.width = Math.floor(rect.width * dpr);
       canvas.height = Math.floor(rect.height * dpr);
       ctx.setTransform(dpr,0,0,dpr,0,0);
       drawScratchLayer();
+      revealed = false;
     }
 
     function drawScratchLayer(){
-      const w = canvas.getBoundingClientRect().width;
-      const h = canvas.getBoundingClientRect().height;
+      const rect = canvas.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
 
-      // base "foil"
+      // IMPORTANT: reset composite so foil draws correctly
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.clearRect(0,0,w,h);
+
       const grad = ctx.createLinearGradient(0,0,w,h);
-      grad.addColorStop(0, 'rgba(255,77,141,.85)');
-      grad.addColorStop(1, 'rgba(255,133,168,.75)');
+      grad.addColorStop(0, 'rgba(255,77,141,.92)');
+      grad.addColorStop(1, 'rgba(255,133,168,.78)');
       ctx.fillStyle = grad;
       ctx.fillRect(0,0,w,h);
 
@@ -841,38 +947,36 @@
       }
       ctx.globalAlpha = 1;
 
-      // label
       ctx.font = '800 18px Inter, sans-serif';
-      ctx.fillStyle = 'rgba(255,255,255,.92)';
+      ctx.fillStyle = 'rgba(255,255,255,.94)';
       ctx.textAlign = 'center';
       ctx.fillText('Scratch here ✨', w/2, h/2 + 6);
     }
 
-    function scratchAt(x,y){
+    function scratchAt(clientX, clientY){
       const rect = canvas.getBoundingClientRect();
-      const cx = x - rect.left;
-      const cy = y - rect.top;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
 
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.arc(cx, cy, 18, 0, Math.PI*2);
+      ctx.arc(x, y, 20, 0, Math.PI*2);
       ctx.fill();
       ctx.globalCompositeOperation = 'source-over';
 
-      // check progress
       maybeReveal();
     }
 
     function getScratchPercent(){
-      // sample a small grid for speed (good enough)
-      const w = Math.floor(canvas.width);
-      const h = Math.floor(canvas.height);
-      const sampleStep = 24; // px in device pixels
+      const w = canvas.width;
+      const h = canvas.height;
+      // sample in device pixels
+      const step = Math.floor(24 * (window.devicePixelRatio || 1));
       const img = ctx.getImageData(0,0,w,h).data;
       let total = 0, cleared = 0;
-      for(let y=0; y<h; y+=sampleStep){
-        for(let x=0; x<w; x+=sampleStep){
-          const i = (y*w + x)*4 + 3; // alpha channel
+      for(let y=0; y<h; y+=step){
+        for(let x=0; x<w; x+=step){
+          const i = (y*w + x)*4 + 3;
           total++;
           if(img[i] < 30) cleared++;
         }
@@ -880,51 +984,49 @@
       return cleared / total;
     }
 
-    let revealed = false;
     function maybeReveal(){
       if(revealed) return;
-      const p = getScratchPercent();
-      if(p > 0.38){
+      if(getScratchPercent() > 0.38){
         revealed = true;
-        // gently fade remaining layer
-        const w = canvas.getBoundingClientRect().width;
-        const h = canvas.getBoundingClientRect().height;
+        // fade remaining layer
         ctx.globalCompositeOperation = 'destination-out';
-        ctx.fillStyle = 'rgba(0,0,0,.25)';
         let t = 0;
+        const rect = canvas.getBoundingClientRect();
+        const w = rect.width, h = rect.height;
         const fade = () => {
           t += 1;
+          ctx.fillStyle = 'rgba(0,0,0,.22)';
           ctx.fillRect(0,0,w,h);
-          if(t < 18) requestAnimationFrame(fade);
+          if(t < 16) requestAnimationFrame(fade);
         };
         requestAnimationFrame(fade);
         ctx.globalCompositeOperation = 'source-over';
       }
     }
 
-    function pointerDown(e){
+    function onPointerDown(e){
       isDrawing = true;
-      const p = (e.touches && e.touches[0]) ? e.touches[0] : e;
-      scratchAt(p.clientX, p.clientY);
-    }
-    function pointerMove(e){
-      if(!isDrawing) return;
-      const p = (e.touches && e.touches[0]) ? e.touches[0] : e;
+      const p = e.touches ? e.touches[0] : e;
       scratchAt(p.clientX, p.clientY);
       e.preventDefault();
     }
-    function pointerUp(){ isDrawing = false; }
+    function onPointerMove(e){
+      if(!isDrawing) return;
+      const p = e.touches ? e.touches[0] : e;
+      scratchAt(p.clientX, p.clientY);
+      e.preventDefault();
+    }
+    function onPointerUp(){ isDrawing = false; }
 
-    canvas.addEventListener('mousedown', pointerDown);
-    canvas.addEventListener('mousemove', pointerMove);
-    window.addEventListener('mouseup', pointerUp);
+    canvas.addEventListener('mousedown', onPointerDown);
+    canvas.addEventListener('mousemove', onPointerMove);
+    window.addEventListener('mouseup', onPointerUp);
 
-    canvas.addEventListener('touchstart', pointerDown, {passive:false});
-    canvas.addEventListener('touchmove', pointerMove, {passive:false});
-    window.addEventListener('touchend', pointerUp);
+    canvas.addEventListener('touchstart', onPointerDown, {passive:false});
+    canvas.addEventListener('touchmove', onPointerMove, {passive:false});
+    canvas.addEventListener('touchend', onPointerUp, {passive:true});
 
-    window.addEventListener('resize', fitScratchCanvas);
-    // ensure canvas has a size first
+    window.addEventListener('resize', ()=>{ requestAnimationFrame(fitScratchCanvas); });
     requestAnimationFrame(fitScratchCanvas);
 
     /* ---------------------------
@@ -944,6 +1046,7 @@
 
     function randomFrom(a){ return a[Math.floor(Math.random()*a.length)] }
 
+    chips.innerHTML = "";
     chipLabels.forEach((label)=>{
       const b = document.createElement('button');
       b.className = 'chip';
@@ -956,7 +1059,7 @@
     });
 
     /* ---------------------------
-       Page 4: Constellation hearts
+       Page 4: Constellation hearts (tooltip fixed bottom)
     ---------------------------- */
     const constellation = document.getElementById('constellation');
     const tooltip = document.getElementById('tooltip');
@@ -973,9 +1076,12 @@
 
     let found = 0;
     const heartsPos = [
-      {x:14, y:26},{x:38, y:18},{x:62, y:28},
-      {x:22, y:58},{x:52, y:52},{x:76, y:64}
+      {x:14, y:22},{x:38, y:16},{x:62, y:24},
+      {x:22, y:46},{x:52, y:42},{x:76, y:52}
     ];
+
+    // clear then add hearts
+    Array.from(constellation.querySelectorAll('.spark')).forEach(n=>n.remove());
 
     heartsPos.forEach((pos, i)=>{
       const s = document.createElement('div');
@@ -997,7 +1103,7 @@
     });
 
     /* ---------------------------
-       Final page: yes/no behavior
+       Final page: yes/no behavior (NO never overlaps YES)
     ---------------------------- */
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
@@ -1011,30 +1117,54 @@
 
     function teleportNo(){
       const page = noBtn.closest('.page');
-      const rect = page.getBoundingClientRect();
+      const pageRect = page.getBoundingClientRect();
+      const yesRect = yesBtn.getBoundingClientRect();
 
-      // keep it inside safe margins, and under the YES button region
-      const pad = 34;
-      const minY = rect.height * 0.48; // below headline & yes button area
-      const maxY = rect.height - pad - 38;
-      const minX = pad + 40; // avoid spine
-      const maxX = rect.width - pad - 120;
+      // build a "no-go" rectangle around YES button (in page coords)
+      const noGo = {
+        left: (yesRect.left - pageRect.left) - 18,
+        right:(yesRect.right - pageRect.left) + 18,
+        top:  (yesRect.top - pageRect.top) - 18,
+        bottom:(yesRect.bottom - pageRect.top) + 18
+      };
 
-      const x = minX + Math.random() * Math.max(10, (maxX - minX));
-      const y = minY + Math.random() * Math.max(10, (maxY - minY));
+      const btnW = 120, btnH = 38;
+      const pad = 22;
+
+      // allowed area inside page
+      const minX = 44; // avoid spine
+      const maxX = pageRect.width - pad - btnW;
+      const minY = Math.max(noGo.bottom + 16, pageRect.height*0.48); // always below YES
+      const maxY = pageRect.height - pad - btnH;
+
+      // fallback if very small screens
+      const safeMinY = Math.min(minY, maxY);
+
+      let x, y;
+      // try a few times to find a spot not intersecting the no-go zone
+      for(let tries=0; tries<20; tries++){
+        x = minX + Math.random() * Math.max(10, (maxX - minX));
+        y = safeMinY + Math.random() * Math.max(10, (maxY - safeMinY));
+
+        const intersects =
+          x < noGo.right &&
+          x + btnW > noGo.left &&
+          y < noGo.bottom &&
+          y + btnH > noGo.top;
+
+        if(!intersects) break;
+      }
 
       noBtn.style.left = x + 'px';
       noBtn.style.top = y + 'px';
       noBtn.style.transform = 'translateX(0)';
 
-      // tiny playful wiggle
       noBtn.animate(
         [{transform:'translateX(0) scale(1)'},{transform:'translateX(0) scale(1.05)'},{transform:'translateX(0) scale(1)'}],
         {duration:240, easing:'ease-out'}
       );
     }
 
-    // start centered under YES
     function centerNo(){
       noBtn.style.left = '50%';
       noBtn.style.top = '67%';
