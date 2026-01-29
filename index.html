@@ -219,13 +219,13 @@
     h1,h2,h3{margin:0}
     .cover-name{
       font-family: "Great Vibes", cursive;
-      font-size: clamp(52px, 7.3vw, 86px);
+      font-size: clamp(56px, 7.6vw, 92px);
       line-height: 1;
       letter-spacing: .02em;
       color: rgba(90, 20, 55, .95);
       text-shadow:
-        0 2px 0 rgba(255,255,255,.8),
-        0 18px 40px rgba(255,77,141,.18);
+        0 2px 0 rgba(255,255,255,.85),
+        0 18px 44px rgba(255,77,141,.20);
     }
     .engraved{ position:relative; }
     .engraved::after{
@@ -254,6 +254,92 @@
       width:100%;
       background: linear-gradient(90deg, transparent, rgba(255,77,141,.30), transparent);
       margin: 8px 0;
+    }
+
+    /* COVER decorations */
+    .cover-frame{
+      position:relative;
+      flex:1;
+      border-radius: 18px;
+      background:
+        radial-gradient(900px 420px at 20% 15%, rgba(255,255,255,.9), rgba(255,255,255,.55)),
+        linear-gradient(135deg, rgba(255,77,141,.07), rgba(255,133,168,.06));
+      border: 1px solid rgba(240,170,200,.30);
+      box-shadow: 0 18px 34px rgba(0,0,0,.06);
+      padding: 22px 20px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      gap:12px;
+    }
+    .cover-frame::before,
+    .cover-frame::after{
+      content:"";
+      position:absolute;
+      width:220px; height:220px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,77,141,.18), rgba(255,133,168,0));
+      filter: blur(.2px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .cover-frame::before{ left:-70px; top:-70px; }
+    .cover-frame::after{ right:-80px; bottom:-80px; }
+
+    .flourish{
+      position:absolute;
+      width:170px;
+      height:170px;
+      opacity:.55;
+      pointer-events:none;
+      filter: drop-shadow(0 10px 20px rgba(255,77,141,.10));
+    }
+    .flourish.tl{ left:10px; top:10px; transform: rotate(-6deg); }
+    .flourish.br{ right:10px; bottom:10px; transform: rotate(174deg); opacity:.45; }
+
+    .seal{
+      margin-top: 2px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(240,170,200,.32);
+      box-shadow: 0 12px 22px rgba(0,0,0,.05);
+      color: rgba(70, 25, 50, .86);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .seal .mini-heart{
+      width:16px; height:16px;
+      transform: rotate(45deg);
+      background: linear-gradient(135deg, rgba(255,77,141,.92), rgba(255,133,168,.72));
+      border-radius: 4px;
+      position:relative;
+      box-shadow: 0 10px 18px rgba(255,77,141,.18);
+    }
+    .seal .mini-heart::before,
+    .seal .mini-heart::after{
+      content:"";
+      position:absolute; width:16px; height:16px;
+      background: inherit;
+      border-radius:50%;
+    }
+    .seal .mini-heart::before{ left:-8px; top:0; }
+    .seal .mini-heart::after{ top:-8px; left:0; }
+
+    .cover-tagline{
+      font-family: "Playfair Display", serif;
+      font-size: 15px;
+      color: rgba(60,25,45,.76);
+      max-width: 52ch;
+      line-height: 1.55;
     }
 
     /* Reasons */
@@ -381,11 +467,11 @@
       background: rgba(255,255,255,.62);
       border: 1px solid rgba(240,170,200,.25);
       box-shadow: 0 12px 22px rgba(0,0,0,.05);
-      padding:16px;
+      padding:18px;
       flex:1;
       display:flex;
       flex-direction:column;
-      gap:12px;
+      gap:14px;
       min-height: 380px;
     }
     .mini-panel h3{
@@ -395,37 +481,36 @@
       color: rgba(70, 25, 50, .9);
       text-align:center;
     }
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      justify-content:center;
-      margin-top: 6px;
-    }
-    .chip{
-      padding:10px 12px;
-      border-radius:999px;
-      background: rgba(255,77,141,.10);
-      border: 1px solid rgba(255,77,141,.22);
-      font-weight:800;
-      font-size:12px;
-      color: rgba(90, 20, 55, .9);
+
+    /* single bigger button */
+    .jar-btn{
+      align-self:center;
+      margin-top: 8px;
+      width:min(360px, 86%);
+      height:54px;
+      border:0;
+      border-radius: 16px;
       cursor:pointer;
-      user-select:none;
-      transition: transform .12s ease, background .12s ease;
+      font-weight: 1000;
+      font-size: 16px;
+      color:white;
+      background: linear-gradient(135deg, rgba(255,77,141,.96), rgba(255,133,168,.84));
+      box-shadow: 0 18px 34px rgba(255,77,141,.20);
+      transition: transform .12s ease, filter .12s ease;
     }
-    .chip:active{ transform: scale(.98); }
-    .chip:hover{ background: rgba(255,77,141,.14); }
+    .jar-btn:hover{ filter: brightness(1.02); }
+    .jar-btn:active{ transform: scale(.99); }
+
     .jar-note{
       margin-top:auto;
-      padding:14px;
+      padding:16px 14px;
       border-radius: 14px;
       background: rgba(255,255,255,.88);
       border: 1px solid rgba(240,170,200,.28);
       color: rgba(50, 20, 35, .88);
       font-size:14px;
-      line-height:1.4;
-      min-height: 110px;
+      line-height:1.45;
+      min-height: 130px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -503,7 +588,7 @@
       justify-content:center;
       gap:14px;
       position:relative;
-      overflow:hidden; /* keep fireworks clipped */
+      overflow:hidden;
       padding: 6px 0 10px;
     }
     #fireworks{
@@ -544,7 +629,7 @@
       cursor:pointer;
       box-shadow: 0 12px 24px rgba(0,0,0,.12);
       z-index:2;
-      position:absolute; /* we place it */
+      position:absolute;
       left:50%;
       transform: translateX(-50%);
     }
@@ -578,6 +663,9 @@
       .nav-zone{ width:14%; }
       .constellation{ height: 260px; padding-bottom: 78px; }
       .yes-btn{ height:86px; font-size:28px; }
+      .cover-frame{ padding: 18px 14px; }
+      .flourish{ width:140px; height:140px; }
+      .jar-btn{ height:52px; font-size:15px; }
     }
   </style>
 </head>
@@ -606,14 +694,39 @@
                   <span id="pageCountA">Page 1 / 6</span>
                 </div>
 
-                <div style="margin-top:10px">
+                <!-- richer cover area -->
+                <div class="cover-frame">
+                  <!-- corner flourishes (inline SVG) -->
+                  <svg class="flourish tl" viewBox="0 0 200 200" aria-hidden="true">
+                    <path d="M35 120c26-8 35-28 44-48 10-23 22-44 52-52 30-8 57 6 64 32 6 23-6 49-33 58-24 8-42-2-56-18 2 20 15 38 39 45 30 9 65-8 74-40"
+                          fill="none" stroke="rgba(255,77,141,.55)" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M58 148c18-2 31-14 40-28" fill="none" stroke="rgba(255,133,168,.45)" stroke-width="7" stroke-linecap="round"/>
+                    <circle cx="118" cy="58" r="10" fill="rgba(255,77,141,.22)"/>
+                    <circle cx="140" cy="44" r="6" fill="rgba(255,133,168,.18)"/>
+                  </svg>
+
+                  <svg class="flourish br" viewBox="0 0 200 200" aria-hidden="true">
+                    <path d="M35 120c26-8 35-28 44-48 10-23 22-44 52-52 30-8 57 6 64 32 6 23-6 49-33 58-24 8-42-2-56-18 2 20 15 38 39 45 30 9 65-8 74-40"
+                          fill="none" stroke="rgba(255,77,141,.55)" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M58 148c18-2 31-14 40-28" fill="none" stroke="rgba(255,133,168,.45)" stroke-width="7" stroke-linecap="round"/>
+                    <circle cx="118" cy="58" r="10" fill="rgba(255,77,141,.22)"/>
+                    <circle cx="140" cy="44" r="6" fill="rgba(255,133,168,.18)"/>
+                  </svg>
+
                   <div class="cover-name engraved">Lexie</div>
-                  <div class="subtitle" style="margin-top:14px">My Favorite Person</div>
+                  <div class="subtitle">My Favorite Person</div>
+
+                  <div class="seal">
+                    <span class="mini-heart" aria-hidden="true"></span>
+                    <span>for you, always</span>
+                  </div>
+
+                  <div class="divider" style="max-width:520px;"></div>
+
+                  <div class="cover-tagline">
+                    A little book of reasons, tiny surprises, and one very important question.
+                  </div>
                 </div>
-
-                <div class="divider"></div>
-
-                <p class="note">A card for you 💗</p>
 
                 <div style="margin-top:auto; display:flex; gap:12px; align-items:center; justify-content:space-between;">
                   <div class="note" style="margin:0; opacity:.85">
@@ -704,12 +817,14 @@
 
                 <div class="jar-page">
                   <div class="mini-panel">
-                    <h3>Pick a note</h3>
+                    <h3>Pull a note</h3>
                     <p class="note" style="margin:0; text-align:center; max-width:none">
-                      Tap a chip to pull a random message.
+                      Tap the button to get a random compliment.
                     </p>
-                    <div class="chips" id="chips"></div>
-                    <div class="jar-note" id="jarNote">Pick one 💗</div>
+
+                    <button class="jar-btn" id="jarBtn" type="button">Get a compliment ✨</button>
+
+                    <div class="jar-note" id="jarNote">Tap the button 💗</div>
                   </div>
                 </div>
               </div>
@@ -984,28 +1099,44 @@
     window.addEventListener('resize', ()=>requestAnimationFrame(resizeScratch));
     requestAnimationFrame(resizeScratch);
 
-    /* Compliment Jar */
+    /* Compliment Jar (more notes + single button) */
     const jarNotes = [
       "I like the way you make me feel calm and excited at the same time.",
       "You’re the kind of person I’d choose in every universe.",
       "Talking to you feels like a warm hoodie.",
       "You make ordinary days feel like something worth remembering.",
       "Your energy is the best kind of contagious.",
-      "You’re effortlessly lovable. (Yes, that’s a thing.)"
+      "You’re effortlessly lovable. (Yes, that’s a thing.)",
+      "You have a way of making people feel seen.",
+      "Your smile could fix a bad day in seconds.",
+      "Being around you just feels… right.",
+      "You’re charming without even trying.",
+      "You make little moments feel special.",
+      "Your laugh is genuinely one of my favorite sounds.",
+      "You’re the perfect mix of sweet and fun.",
+      "You have great taste, and it shows.",
+      "You’re easy to be myself around.",
+      "You’re thoughtful in the ways that matter most.",
+      "You’re prettier than you realize.",
+      "You make me look forward to things.",
+      "You’re the kind of person people are lucky to know.",
+      "You make the world feel softer around the edges.",
+      "Your vibe is unmatched.",
+      "You’re adorable when you’re focused on something.",
+      "You’re comforting and exciting at the same time.",
+      "You make me want to be better — in a good way."
     ];
-    const chipLabels = ["Pick one", "Another", "Again", "More", "One more", "Surprise"];
-    const chips = document.getElementById('chips');
+
+    const jarBtn  = document.getElementById('jarBtn');
     const jarNote = document.getElementById('jarNote');
     function randomFrom(a){ return a[Math.floor(Math.random()*a.length)] }
-    chips.innerHTML = "";
-    chipLabels.forEach((label)=>{
-      const b = document.createElement('button');
-      b.className = 'chip';
-      b.type = 'button';
-      b.textContent = label;
-      b.addEventListener('click', ()=>{ jarNote.textContent = randomFrom(jarNotes); });
-      chips.appendChild(b);
-    });
+
+    if(jarBtn){
+      jarBtn.addEventListener('click', ()=>{
+        jarNote.textContent = randomFrom(jarNotes);
+        jarNote.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}], {duration:220, easing:'ease-out'});
+      });
+    }
 
     /* Constellation */
     const constellation = document.getElementById('constellation');
@@ -1022,6 +1153,7 @@
     ];
     let found = 0;
 
+    // Keep hearts safely above tooltip space
     const heartsPos = [
       {x:14, y:14},{x:38, y:10},{x:62, y:14},
       {x:22, y:34},{x:52, y:30},{x:76, y:36}
@@ -1087,7 +1219,7 @@
       for(let i=particles.length-1;i>=0;i--){
         const p = particles[i];
         p.age++;
-        p.vy += 0.06;   // gravity
+        p.vy += 0.06;
         p.x += p.vx;
         p.y += p.vy;
 
@@ -1144,7 +1276,6 @@
       const btnW = noBtn.offsetWidth || 130;
       const btnH = noBtn.offsetHeight || 40;
 
-      // no-go zone (YES + margin), in CTA coordinates
       const noGo = {
         left: (yesRect.left - ctaRect.left) - 18,
         right: (yesRect.right - ctaRect.left) + 18,
@@ -1156,12 +1287,10 @@
       const minX = padL;
       const maxX = ctaRect.width - padR - btnW;
 
-      // ALWAYS below YES (also keeps it away from message area somewhat)
       const minY = Math.max(noGo.bottom + 24, ctaRect.height * 0.66);
       const maxY = ctaRect.height - padB - btnH;
       const safeMinY = Math.min(minY, maxY);
 
-      // default: centered under YES
       let x = (ctaRect.width/2) - (btnW/2);
       let y = Math.max(safeMinY, ctaRect.height * 0.78);
 
@@ -1185,7 +1314,6 @@
       noBtn.style.transform = "translateX(0)";
     }
 
-    // Start centered under YES
     placeNoSafely(false);
 
     noBtn.addEventListener('click', (e)=>{
