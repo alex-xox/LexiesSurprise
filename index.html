@@ -38,7 +38,6 @@
       overflow:hidden;
     }
 
-    /* subtle floating hearts in background */
     .bg-hearts{
       position:fixed; inset:0; pointer-events:none; overflow:hidden;
       filter: drop-shadow(0 8px 12px rgba(0,0,0,.06));
@@ -66,7 +65,6 @@
       to{ transform: translateY(-120vh) rotate(45deg); opacity:0;}
     }
 
-    /* Layout */
     .wrap{
       height:100%;
       display:flex;
@@ -99,7 +97,6 @@
       box-shadow: 0 8px 16px rgba(0,0,0,.05);
     }
 
-    /* Card Book */
     .book{
       width:100%;
       height:100%;
@@ -125,7 +122,6 @@
       box-shadow: inset 0 0 0 1px rgba(240, 170, 200, .25);
     }
 
-    /* Navigation tap zones */
     .nav-zone{
       position:absolute; top:0; bottom:0;
       width:18%;
@@ -146,7 +142,6 @@
     .nav-right::after{ background: linear-gradient(270deg, rgba(255,77,141,.18), transparent); }
     .nav-zone:hover::after{opacity:1}
 
-    /* Pages stack */
     .pages{
       position:absolute; inset:0;
       border-radius: calc(var(--radius) - 8px);
@@ -164,7 +159,6 @@
       transition: transform 850ms cubic-bezier(.2,.9,.2,1);
     }
 
-    /* Paper edge */
     .page::before{
       content:"";
       position:absolute; left:0; top:0; bottom:0;
@@ -179,7 +173,6 @@
 
     .page.flipped{ transform: rotateY(-180deg); }
 
-    /* Content + scrolling */
     .content{
       position:absolute;
       inset:0;
@@ -282,7 +275,6 @@
       width:220px; height:220px;
       border-radius: 999px;
       background: radial-gradient(circle at 30% 30%, rgba(255,77,141,.18), rgba(255,133,168,0));
-      filter: blur(.2px);
       opacity:.9;
       pointer-events:none;
     }
@@ -379,7 +371,6 @@
       font-weight:600;
     }
 
-    /* Barely-visible secrets */
     .secrets{
       margin-top: 18px;
       padding-bottom: 8px;
@@ -455,13 +446,8 @@
       touch-action:none;
     }
 
-    /* Compliment Jar page */
-    .jar-page{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-      flex:1;
-    }
+    /* Compliment Jar */
+    .jar-page{ display:flex; flex-direction:column; gap:14px; flex:1; }
     .mini-panel{
       border-radius: 18px;
       background: rgba(255,255,255,.62);
@@ -481,8 +467,6 @@
       color: rgba(70, 25, 50, .9);
       text-align:center;
     }
-
-    /* single bigger button */
     .jar-btn{
       align-self:center;
       margin-top: 8px;
@@ -579,7 +563,7 @@
       white-space:nowrap;
     }
 
-    /* FINAL PAGE (Valentine) */
+    /* Final page */
     .valentine-cta{
       flex:1;
       display:flex;
@@ -633,11 +617,7 @@
       left:50%;
       transform: translateX(-50%);
     }
-    .no-btn::after{
-      content:" :(";
-      opacity:.85;
-      font-weight:900;
-    }
+    .no-btn::after{ content:" :("; opacity:.85; font-weight:900; }
 
     .yes-msg{
       display:none;
@@ -655,7 +635,6 @@
       line-height: 1.35;
     }
 
-    /* Mobile tweaks */
     @media (max-width: 820px){
       .content{ padding: 34px 18px 18px 44px; }
       .reasons{ grid-template-columns: 1fr; }
@@ -694,9 +673,7 @@
                   <span id="pageCountA">Page 1 / 6</span>
                 </div>
 
-                <!-- richer cover area -->
                 <div class="cover-frame">
-                  <!-- corner flourishes (inline SVG) -->
                   <svg class="flourish tl" viewBox="0 0 200 200" aria-hidden="true">
                     <path d="M35 120c26-8 35-28 44-48 10-23 22-44 52-52 30-8 57 6 64 32 6 23-6 49-33 58-24 8-42-2-56-18 2 20 15 38 39 45 30 9 65-8 74-40"
                           fill="none" stroke="rgba(255,77,141,.55)" stroke-width="8" stroke-linecap="round"/>
@@ -729,15 +706,13 @@
                 </div>
 
                 <div style="margin-top:auto; display:flex; gap:12px; align-items:center; justify-content:space-between;">
-                  <div class="note" style="margin:0; opacity:.85">
-                    Tip: swipe left and right
-                  </div>
+                  <div class="note" style="margin:0; opacity:.85">Tip: swipe left and right</div>
                   <div class="badge" style="background:rgba(255,255,255,.65)">♥</div>
                 </div>
               </div>
             </section>
 
-            <!-- PAGE 2: 15 reasons + subtle secrets -->
+            <!-- PAGE 2 -->
             <section class="page" data-index="1" style="z-index:5">
               <div class="content">
                 <div class="topline">
@@ -750,10 +725,7 @@
                 </h2>
 
                 <div class="scrollable">
-                  <p class="note" style="margin-top:0">
-                    Just a few… but you know I could keep going.
-                  </p>
-
+                  <p class="note" style="margin-top:0">Just a few… but you know I could keep going.</p>
                   <div class="reasons" id="reasonsGrid"></div>
 
                   <div class="secrets" aria-hidden="true">
@@ -766,7 +738,7 @@
               </div>
             </section>
 
-            <!-- PAGE 3: Scratch (ONLY) -->
+            <!-- PAGE 3: Scratch -->
             <section class="page" data-index="2" style="z-index:4">
               <div class="content">
                 <div class="topline">
@@ -779,9 +751,7 @@
                 </h2>
 
                 <div class="scrollable">
-                  <p class="note" style="margin-top:0">
-                    Scratch the panel to reveal the message.
-                  </p>
+                  <p class="note" style="margin-top:0">Scratch the panel to reveal the message.</p>
 
                   <div class="scratch-wrap">
                     <div class="panel">
@@ -794,9 +764,7 @@
                       </div>
 
                       <div style="height:10px"></div>
-                      <p class="note" style="margin:0; font-size:13px; opacity:.9">
-                        (No spoilers — the cover stays fully opaque until you scratch.)
-                      </p>
+                      <!-- removed the “No spoilers...” note -->
                     </div>
                   </div>
                 </div>
@@ -842,8 +810,9 @@
                   A Little Constellation
                 </h2>
 
+                <!-- removed "(you can edit these to match your story)" -->
                 <p class="note" style="margin-top:-6px">
-                  Tap the hearts to reveal tiny “moments” (you can edit these to match your story).
+                  Tap the hearts to reveal tiny “moments”.
                 </p>
 
                 <div class="constellation" id="constellation">
@@ -853,13 +822,11 @@
                   </div>
                 </div>
 
-                <p class="note" style="margin-top:auto; opacity:.9">
-                  (Replace these with inside jokes, dates, places, or memories.)
-                </p>
+                <!-- removed "(Replace these with inside jokes, dates, places, or memories.)" -->
               </div>
             </section>
 
-            <!-- PAGE 6: FINAL VALENTINE PAGE -->
+            <!-- PAGE 6: FINAL -->
             <section class="page" data-index="5" style="z-index:1">
               <div class="content">
                 <div class="topline">
@@ -979,7 +946,7 @@
 
     goTo(0);
 
-    /* Reasons list (random order) */
+    /* Reasons list */
     const reasons = [
       "How easy you are to talk to",
       "Your laugh",
@@ -1014,7 +981,7 @@
       reasonsGrid.appendChild(item);
     });
 
-    /* Scratch (fully opaque cover; no visible “scratch here” text) */
+    /* Scratch */
     const scratchArea = document.getElementById('scratchArea');
     const canvas = document.getElementById('scratchCanvas');
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -1022,7 +989,6 @@
 
     function drawScratchCover(){
       const dpr = Math.max(1, window.devicePixelRatio || 1);
-
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
@@ -1060,12 +1026,10 @@
     function resizeScratch(){
       const rect = scratchArea.getBoundingClientRect();
       const dpr = Math.max(1, window.devicePixelRatio || 1);
-
       canvas.width  = Math.floor(rect.width * dpr);
       canvas.height = Math.floor(rect.height * dpr);
       canvas.style.width = rect.width + "px";
       canvas.style.height = rect.height + "px";
-
       drawScratchCover();
     }
 
@@ -1099,7 +1063,7 @@
     window.addEventListener('resize', ()=>requestAnimationFrame(resizeScratch));
     requestAnimationFrame(resizeScratch);
 
-    /* Compliment Jar (more notes + single button) */
+    /* Compliment Jar */
     const jarNotes = [
       "I like the way you make me feel calm and excited at the same time.",
       "You’re the kind of person I’d choose in every universe.",
@@ -1114,23 +1078,17 @@
       "You make little moments feel special.",
       "Your laugh is genuinely one of my favorite sounds.",
       "You’re the perfect mix of sweet and fun.",
-      "You have great taste, and it shows.",
       "You’re easy to be myself around.",
       "You’re thoughtful in the ways that matter most.",
       "You’re prettier than you realize.",
       "You make me look forward to things.",
       "You’re the kind of person people are lucky to know.",
       "You make the world feel softer around the edges.",
-      "Your vibe is unmatched.",
-      "You’re adorable when you’re focused on something.",
-      "You’re comforting and exciting at the same time.",
-      "You make me want to be better — in a good way."
+      "Your vibe is unmatched."
     ];
-
     const jarBtn  = document.getElementById('jarBtn');
     const jarNote = document.getElementById('jarNote');
     function randomFrom(a){ return a[Math.floor(Math.random()*a.length)] }
-
     if(jarBtn){
       jarBtn.addEventListener('click', ()=>{
         jarNote.textContent = randomFrom(jarNotes);
@@ -1153,7 +1111,6 @@
     ];
     let found = 0;
 
-    // Keep hearts safely above tooltip space
     const heartsPos = [
       {x:14, y:14},{x:38, y:10},{x:62, y:14},
       {x:22, y:34},{x:52, y:30},{x:76, y:36}
@@ -1176,7 +1133,7 @@
       constellation.appendChild(s);
     });
 
-    /* FINAL PAGE: YES fireworks + message, NO teleports (never overlaps YES; always below) */
+    /* FINAL PAGE: continuous fireworks after YES */
     const yesBtn = document.getElementById('yesBtn');
     const noBtn  = document.getElementById('noBtn');
     const yesMsg = document.getElementById('yesMsg');
@@ -1184,6 +1141,8 @@
     const fwCtx = fwCanvas.getContext('2d');
 
     let particles = [];
+    let fireworksOn = false;
+    let burstTimer = null;
     let animating = false;
 
     function resizeFireworks(){
@@ -1195,27 +1154,48 @@
 
     function burst(x, y){
       const dpr = Math.max(1, window.devicePixelRatio || 1);
-      const count = 80;
+      const count = 70;
       for(let i=0;i<count;i++){
         const a = Math.random()*Math.PI*2;
-        const sp = (Math.random()*3.2 + 2.6) * dpr;
+        const sp = (Math.random()*3.0 + 2.4) * dpr;
         particles.push({
           x, y,
           vx: Math.cos(a)*sp,
           vy: Math.sin(a)*sp,
-          life: 70 + Math.random()*35,
+          life: 70 + Math.random()*40,
           age: 0,
-          size: (Math.random()*2.2 + 1.2) * dpr,
+          size: (Math.random()*2.2 + 1.1) * dpr,
           hue: 320 + Math.random()*35
         });
       }
+      // cap so it never gets too heavy
+      if(particles.length > 2600) particles.splice(0, particles.length - 2600);
+    }
+
+    function burstAroundYes(){
+      resizeFireworks();
+      const dpr = Math.max(1, window.devicePixelRatio || 1);
+
+      const host = fwCanvas.getBoundingClientRect();
+      const r = yesBtn.getBoundingClientRect();
+      const cx = ((r.left + r.right)/2 - host.left) * dpr;
+      const cy = ((r.top + r.bottom)/2 - host.top) * dpr;
+
+      burst(cx, cy);
+      burst(cx - fwCanvas.width*0.18, cy - fwCanvas.height*0.10);
+      burst(cx + fwCanvas.width*0.18, cy - fwCanvas.height*0.10);
     }
 
     function animate(){
       if(!animating) return;
-      fwCtx.clearRect(0,0,fwCanvas.width, fwCanvas.height);
+
+      // slight fade for smooth trails
+      fwCtx.globalCompositeOperation = 'source-over';
+      fwCtx.fillStyle = 'rgba(255,255,255,0.10)';
+      fwCtx.fillRect(0,0,fwCanvas.width, fwCanvas.height);
 
       fwCtx.globalCompositeOperation = 'lighter';
+
       for(let i=particles.length-1;i>=0;i--){
         const p = particles[i];
         p.age++;
@@ -1233,9 +1213,11 @@
 
         if(p.age >= p.life) particles.splice(i,1);
       }
+
       fwCtx.globalCompositeOperation = 'source-over';
 
-      if(particles.length === 0){
+      // keep running while fireworks are on; otherwise stop when done
+      if(!fireworksOn && particles.length === 0){
         animating = false;
         fwCtx.clearRect(0,0,fwCanvas.width, fwCanvas.height);
         return;
@@ -1243,28 +1225,27 @@
       requestAnimationFrame(animate);
     }
 
-    function fireworksAroundYes(){
+    function startFireworks(){
+      if(fireworksOn) return;
+      fireworksOn = true;
       resizeFireworks();
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
 
-      const host = fwCanvas.getBoundingClientRect();
-      const r = yesBtn.getBoundingClientRect();
-      const cx = ((r.left + r.right)/2 - host.left) * dpr;
-      const cy = ((r.top + r.bottom)/2 - host.top) * dpr;
+      // start animation loop once
+      if(!animating){
+        animating = true;
+        // start with a clean canvas
+        fwCtx.clearRect(0,0,fwCanvas.width, fwCanvas.height);
+        requestAnimationFrame(animate);
+      }
 
-      particles = [];
-      animating = true;
-
-      burst(cx, cy);
-      burst(cx - fwCanvas.width*0.18, cy - fwCanvas.height*0.10);
-      burst(cx + fwCanvas.width*0.18, cy - fwCanvas.height*0.10);
-
-      requestAnimationFrame(animate);
+      // initial burst + repeating bursts
+      burstAroundYes();
+      burstTimer = setInterval(burstAroundYes, 420);
     }
 
     yesBtn.addEventListener('click', ()=>{
       yesMsg.style.display = 'block';
-      fireworksAroundYes();
+      startFireworks();
       yesBtn.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}], {duration:240, easing:'ease-out'});
     });
 
