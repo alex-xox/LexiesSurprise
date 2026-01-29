@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Lexi — My Favorite Person</title>
+  <title>Lexie — My Favorite Person</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,6 @@
       --rose2:#ff85a8;
       --paper:#fffafc;
       --paper2:#fff3f8;
-      --edge:#f0d7e4;
       --shadow: 0 20px 60px rgba(35, 10, 25, .18);
       --shadow2: 0 10px 30px rgba(35, 10, 25, .14);
       --radius: 22px;
@@ -113,9 +112,7 @@
       padding:18px;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 133, 168, .35);
-
-      /* allow vertical scroll inside pages, swipe handler manages horizontal */
-      touch-action: pan-y;
+      touch-action: pan-y; /* vertical scroll allowed; horizontal swipe handled by JS */
     }
 
     .book-inner{
@@ -303,7 +300,7 @@
       font-family: "Playfair Display", serif;
       font-size: 12.5px;
       line-height: 1.7;
-      color: rgba(90, 20, 55, .16);
+      color: rgba(90, 20, 55, .14);
       user-select:none;
     }
     .secrets .line{
@@ -421,7 +418,7 @@
       align-items:center;
     }
 
-    /* Constellation */
+    /* Constellation (smaller; no scroll needed on mobile) */
     .constellation{
       position:relative;
       border-radius: 18px;
@@ -431,8 +428,8 @@
       border: 1px solid rgba(255,77,141,.18);
       box-shadow: 0 16px 30px rgba(0,0,0,.06);
       overflow:hidden;
-      min-height: 380px;
-      padding-bottom: 86px; /* reserve space so tooltip never covers hearts */
+      height: 300px;          /* smaller */
+      padding-bottom: 78px;   /* reserve space for tooltip */
     }
     .spark{
       position:absolute;
@@ -457,8 +454,8 @@
 
     .tooltip{
       position:absolute;
-      left:16px; right:16px; bottom:16px;
-      padding:12px 14px;
+      left:16px; right:16px; bottom:14px;
+      padding:10px 12px;
       border-radius: 14px;
       background: rgba(255,255,255,.88);
       border: 1px solid rgba(240,170,200,.35);
@@ -473,7 +470,7 @@
     .tooltip strong{font-weight:900}
     .tooltip .pill{
       margin-left:auto;
-      padding:7px 10px;
+      padding:6px 10px;
       border-radius:999px;
       background: rgba(255,77,141,.10);
       border: 1px solid rgba(255,77,141,.22);
@@ -518,17 +515,17 @@
       height:38px;
       border-radius: 999px;
       border: 1px solid rgba(255,77,141,.28);
-      background: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.90);
       color: rgba(90, 20, 55, .92);
       font-weight:900;
       cursor:pointer;
       box-shadow: 0 12px 24px rgba(0,0,0,.08);
-      z-index:2; /* visible, but still below YES due to no-go zone */
+      z-index:2;
       left:50%;
-      top: 72%;
+      top: 82%;               /* starts lower (south of YES) */
       transform: translateX(-50%);
     }
-    .small-no:hover{ background: rgba(255,255,255,.95); }
+    .small-no:hover{ background: rgba(255,255,255,.98); }
     .small-no:active{ transform: translateX(-50%) scale(.98); }
 
     .success{
@@ -550,8 +547,8 @@
       .reasons{ grid-template-columns: 1fr; }
       .scratch-wrap{ grid-template-columns: 1fr; }
       .hint{ top:-46px; font-size:12px; }
-      .nav-zone{ width:14%; } /* keep swipe primary */
-      .constellation{ min-height: 440px; }
+      .nav-zone{ width:14%; }
+      .constellation{ height: 260px; padding-bottom: 78px; } /* smaller on mobile */
     }
   </style>
 </head>
@@ -581,20 +578,17 @@
                 </div>
 
                 <div style="margin-top:10px">
-                  <div class="cover-name engraved">Lexi</div>
+                  <div class="cover-name engraved">Lexie</div>
                   <div class="subtitle" style="margin-top:14px">My Favorite Person</div>
                 </div>
 
                 <div class="divider"></div>
 
-                <p class="note">
-                  A tiny interactive card—made just for you. 💗<br>
-                  (Turn the page like a little book.)
-                </p>
+                <p class="note">A card for you 💗</p>
 
                 <div style="margin-top:auto; display:flex; gap:12px; align-items:center; justify-content:space-between;">
                   <div class="note" style="margin:0; opacity:.85">
-                    Tip: swipe left/right on mobile
+                    Tip: swipe left and right
                   </div>
                   <div class="badge" style="background:rgba(255,255,255,.65)">♥</div>
                 </div>
@@ -620,17 +614,13 @@
 
                   <div class="reasons" id="reasonsGrid"></div>
 
-                  <!-- Barely-visible secrets (no label) -->
+                  <!-- Hard-to-see secret messages (kept subtle; non-explicit) -->
                   <div class="secrets" aria-hidden="true">
-                    <div class="line">Your perfect tits</div>
-                    <div class="line">Your pretty little pussy</div>
-                    <div class="line">Your fat ass</div>
-                    <div class="line">Your willingness to please me</div>
+                    <div class="line">I love your confidence</div>
+                    <div class="line">I love your smile up close</div>
+                    <div class="line">I love the way you look at me</div>
+                    <div class="line">I love how you drive me crazy</div>
                   </div>
-
-                  <p class="note" style="margin-top:12px; opacity:.9">
-                    (P.S. They’re in a cute random order every time.)
-                  </p>
                 </div>
               </div>
             </section>
@@ -687,22 +677,21 @@
                   A Little Constellation
                 </h2>
 
-                <div class="scrollable">
-                  <p class="note" style="margin-top:0">
-                    Tap the hearts to reveal tiny “moments” (you can edit these to match your story).
-                  </p>
+                <!-- no scroll needed now -->
+                <p class="note" style="margin-top:-6px">
+                  Tap the hearts to reveal tiny “moments” (you can edit these to match your story).
+                </p>
 
-                  <div class="constellation" id="constellation">
-                    <div class="tooltip" id="tooltip">
-                      <strong>Tap a heart</strong> to reveal a note.
-                      <span class="pill" id="foundPill">0 / 6 found</span>
-                    </div>
+                <div class="constellation" id="constellation">
+                  <div class="tooltip" id="tooltip">
+                    <strong>Tap a heart</strong> to reveal a note.
+                    <span class="pill" id="foundPill">0 / 6 found</span>
                   </div>
-
-                  <p class="note" style="margin-top:12px; opacity:.9">
-                    (Replace these with inside jokes, dates, places, or memories.)
-                  </p>
                 </div>
+
+                <p class="note" style="margin-top:auto; opacity:.9">
+                  (Replace these with inside jokes, dates, places, or memories.)
+                </p>
               </div>
             </section>
 
@@ -758,7 +747,7 @@
       }
     })();
 
-    /* Page flip logic + swipe on mobile */
+    /* Page flip logic + swipe */
     const pages = Array.from(document.querySelectorAll('.page'));
     let current = 0;
 
@@ -767,20 +756,13 @@
       const el = document.getElementById('pageCountA');
       if(el) el.textContent = `Page ${current+1} / ${total}`;
     }
-
     function goTo(idx){
       idx = Math.max(0, Math.min(pages.length-1, idx));
       current = idx;
-
-      pages.forEach((p,i)=>{
-        if(i < current) p.classList.add('flipped');
-        else p.classList.remove('flipped');
-      });
-
+      pages.forEach((p,i)=> (i < current) ? p.classList.add('flipped') : p.classList.remove('flipped'));
       pages.forEach((p,i)=> p.style.zIndex = (pages.length - i));
       updatePageCounters();
     }
-
     function next(){ goTo(current + 1); }
     function prev(){ goTo(current - 1); }
 
@@ -792,7 +774,6 @@
       if(e.key === 'ArrowLeft') prev();
     });
 
-    // Swipe on book (mobile)
     const book = document.getElementById('book');
     let touchStartX = 0, touchStartY = 0, tracking = false;
 
@@ -809,9 +790,7 @@
       const t = e.touches[0];
       const dx = t.clientX - touchStartX;
       const dy = t.clientY - touchStartY;
-      if(Math.abs(dx) > 18 && Math.abs(dx) > Math.abs(dy) + 10){
-        e.preventDefault();
-      }
+      if(Math.abs(dx) > 18 && Math.abs(dx) > Math.abs(dy) + 10) e.preventDefault();
     }, {passive:false});
 
     book.addEventListener('touchend', (e)=>{
@@ -828,7 +807,7 @@
 
     goTo(0);
 
-    /* Page 2: 15 reasons (random order) */
+    /* Reasons list (random order) */
     const reasons = [
       "How easy you are to talk to",
       "Your laugh",
@@ -846,7 +825,6 @@
       "How you make simple moments feel special",
       "The way you’re unapologetically you"
     ];
-
     function shuffle(arr){
       const a = arr.slice();
       for(let i=a.length-1;i>0;i--){
@@ -855,7 +833,6 @@
       }
       return a;
     }
-
     const reasonsGrid = document.getElementById('reasonsGrid');
     reasonsGrid.innerHTML = "";
     shuffle(reasons).forEach((text, idx)=>{
@@ -865,11 +842,10 @@
       reasonsGrid.appendChild(item);
     });
 
-    /* Page 3: Scratch to reveal (fixed: no show-through, no black fade) */
+    /* Scratch (no show-through, no black fade) */
     const scratchArea = document.getElementById('scratchArea');
     const canvas = document.getElementById('scratchCanvas');
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
     let isDrawing = false;
 
     function resizeScratch(){
@@ -881,7 +857,6 @@
       canvas.style.width = rect.width + "px";
       canvas.style.height = rect.height + "px";
 
-      // draw foil in device pixels
       ctx.setTransform(1,0,0,1,0,0);
       ctx.clearRect(0,0,canvas.width,canvas.height);
 
@@ -892,7 +867,6 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      // subtle stripes (in foil, not see-through)
       ctx.globalAlpha = 0.18;
       for(let i=0;i<14;i++){
         const y = (i/14)*canvas.height;
@@ -905,7 +879,6 @@
       }
       ctx.globalAlpha = 1;
 
-      // label
       ctx.font = `${Math.round(18*dpr)}px Inter, sans-serif`;
       ctx.fillStyle = 'rgba(255,255,255,0.92)';
       ctx.textAlign = 'center';
@@ -931,13 +904,11 @@
       scratchAt(e.clientX, e.clientY);
       e.preventDefault();
     });
-
     canvas.addEventListener('pointermove', (e)=>{
       if(!isDrawing) return;
       scratchAt(e.clientX, e.clientY);
       e.preventDefault();
     });
-
     const stopScratch = ()=>{ isDrawing = false; };
     canvas.addEventListener('pointerup', stopScratch);
     canvas.addEventListener('pointercancel', stopScratch);
@@ -956,9 +927,7 @@
     const chipLabels = ["Pick one", "Another", "Again", "More", "One more", "Surprise"];
     const chips = document.getElementById('chips');
     const jarNote = document.getElementById('jarNote');
-
     function randomFrom(a){ return a[Math.floor(Math.random()*a.length)] }
-
     chips.innerHTML = "";
     chipLabels.forEach((label)=>{
       const b = document.createElement('button');
@@ -969,7 +938,7 @@
       chips.appendChild(b);
     });
 
-    /* Page 4: Constellation */
+    /* Constellation */
     const constellation = document.getElementById('constellation');
     const tooltip = document.getElementById('tooltip');
     const foundPill = document.getElementById('foundPill');
@@ -982,18 +951,14 @@
       "A little thing you do that I adore.",
       "The ‘this is my favorite person’ feeling."
     ];
-
     let found = 0;
 
-    // Hearts positions kept above tooltip area (tooltip space reserved via padding-bottom)
+    // Keep hearts safely above tooltip space
     const heartsPos = [
-      {x:14, y:18},{x:38, y:14},{x:62, y:18},
-      {x:22, y:40},{x:52, y:36},{x:76, y:44}
+      {x:14, y:14},{x:38, y:10},{x:62, y:14},
+      {x:22, y:34},{x:52, y:30},{x:76, y:36}
     ];
-
-    // remove any existing hearts
     Array.from(constellation.querySelectorAll('.spark')).forEach(n=>n.remove());
-
     heartsPos.forEach((pos, i)=>{
       const s = document.createElement('div');
       s.className = 'spark';
@@ -1011,7 +976,7 @@
       constellation.appendChild(s);
     });
 
-    /* Final page: YES/NO behavior (NO always visible, never overlaps YES) */
+    /* Final page: YES/NO behavior (NO starts lower; teleports only below YES; never overlaps) */
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
     const successMsg = document.getElementById('successMsg');
@@ -1026,10 +991,9 @@
       const ctaRect = cta.getBoundingClientRect();
       const yesRect = yesBtn.getBoundingClientRect();
 
-      // button size (CSS-defined)
       const btnW = 120, btnH = 38;
 
-      // no-go zone around YES (in CTA coords)
+      // no-go zone around YES (CTA coords)
       const noGo = {
         left: (yesRect.left - ctaRect.left) - 18,
         right: (yesRect.right - ctaRect.left) + 18,
@@ -1037,25 +1001,22 @@
         bottom: (yesRect.bottom - ctaRect.top) + 18
       };
 
-      const padL = 24;   // keep away from spine side feel
-      const padR = 24;
-      const padB = 18;
-
+      const padL = 24, padR = 24, padB = 18;
       const minX = padL;
       const maxX = ctaRect.width - padR - btnW;
 
-      // Always below the YES button area
-      const minY = Math.max(noGo.bottom + 18, ctaRect.height * 0.58);
+      // ALWAYS below YES
+      const minY = Math.max(noGo.bottom + 28, ctaRect.height * 0.68);
       const maxY = ctaRect.height - padB - btnH;
 
-      // If screen is tiny, clamp so it stays visible
       const safeMinY = Math.min(minY, maxY);
 
+      // default: centered, lower
       let x = (ctaRect.width/2) - (btnW/2);
-      let y = safeMinY;
+      let y = Math.max(safeMinY, ctaRect.height * 0.80);
 
       if(randomize){
-        for(let tries=0; tries<30; tries++){
+        for(let tries=0; tries<40; tries++){
           x = minX + Math.random() * Math.max(10, (maxX - minX));
           y = safeMinY + Math.random() * Math.max(10, (maxY - safeMinY));
 
@@ -1074,21 +1035,18 @@
       noBtn.style.transform = "translateX(0)";
     }
 
-    // initial: centered under YES but still safe
     placeNoSafely(false);
 
     noBtn.addEventListener('click', (e)=>{
       e.preventDefault();
       placeNoSafely(true);
       noBtn.animate(
-        [{transform:'translateX(0) scale(1)'},{transform:'translateX(0) scale(1.05)'},{transform:'translateX(0) scale(1)'}],
+        [{transform:'translateX(0) scale(1)'},{transform:'translateX(0) scale(1.06)'},{transform:'translateX(0) scale(1)'}],
         {duration:240, easing:'ease-out'}
       );
     });
 
-    /* Ensure NO stays visible on resize/orientation changes */
     window.addEventListener('resize', ()=>placeNoSafely(false));
-
   </script>
 </body>
 </html>
