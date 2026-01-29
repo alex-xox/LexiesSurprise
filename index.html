@@ -631,7 +631,15 @@
 
       z-index:3;
     }
-    .tooltip strong{font-weight:900}
+    .tooltip strong{
+  font-weight:900;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.tooltip .tip-text{
+  min-width: 0;
+}
 
     /* Counter pinned BELOW tooltip */
     .found-counter{
@@ -1293,7 +1301,7 @@
           found++;
           foundPill.textContent = `${found} / 6 found`;
         }
-        tooltip.innerHTML = `<strong>Looking forward to:</strong> ${memoryNotes[i]}`;
+        tooltip.innerHTML = `<strong>Looking forward to:</strong><span class="tip-text">${memoryNotes[i]}</span>`;
       });
       constellation.appendChild(s);
     });
